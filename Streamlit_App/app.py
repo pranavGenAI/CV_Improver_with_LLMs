@@ -9,7 +9,10 @@ from app_display_results import display_resume_analysis
 def save_uploaded_file(uploaded_file):
     """Save uploaded file to a temporary location."""
     if uploaded_file is not None:
-        file_path = os.path.join("tempDir", uploaded_file.name)
+        temp_dir = "tempDir"
+        if not os.path.exists(temp_dir):
+            os.makedirs(temp_dir)
+        file_path = os.path.join(temp_dir, uploaded_file.name)
         with open(file_path, "wb") as f:
             f.write(uploaded_file.getbuffer())
         return file_path
