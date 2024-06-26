@@ -14,7 +14,7 @@ def main():
             try:
                 # 1. Create the Langchain retrieval
                 retrieval_main()
-
+                st.write("Retrieval success")
                 # 2. Instantiate a deterministic LLM with a temperature of 0.0.
                 st.session_state.llm = instantiate_LLM_main(temperature=0.0, top_p=0.95)
 
@@ -25,6 +25,7 @@ def main():
                 )
 
                 # 4. Analyze the resume
+                st.write("analyzing resume")
                 st.session_state.SCANNED_RESUME = resume_analyzer_main(
                     llm=st.session_state.llm,
                     llm_creative=st.session_state.llm_creative,
