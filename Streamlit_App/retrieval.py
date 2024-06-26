@@ -166,6 +166,7 @@ def retrieval_main():
 
     # 1. Delete old temp files from TMP directory.
     delte_temp_files()
+    st.write("Files got deleted")
 
     if st.session_state.uploaded_file is not None:
         # 2. Save uploaded_file to TMP directory.
