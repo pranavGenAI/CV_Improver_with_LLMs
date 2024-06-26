@@ -1,10 +1,19 @@
 import streamlit as st
+import os
 from app_sidebar import sidebar
 from llm_functions import instantiate_LLM_main, get_api_keys_from_local_env
 from retrieval import retrieval_main
 from resume_analyzer import resume_analyzer_main
 from app_display_results import display_resume_analysis
 
+def save_uploaded_file(uploaded_file):
+    """Save uploaded file to a temporary location."""
+    if uploaded_file is not None:
+        file_path = os.path.join("tempDir", uploaded_file.name)
+        with open(file_path, "wb") as f:
+            f.write(uploaded_file.getbuffer())
+        return file_path
+    return None
 
 def main():
     """Analyze the uploaded resume."""
@@ -14,6 +23,12 @@ def main():
                 
         with st.spinner("Please wait..."):
             try:
+                # Save the uploaded file
+                file_path = save_uploaded_file(st.session_state.uploaded_file)
+                if not file_path:
+                    st.error("No file uploaded or file saving failed.")
+                    return
+
                 # 1. Create the Langchain retrieval
                 retrieval_main()
                 st.write("Retrieval success")
@@ -31,14 +46,14 @@ def main():
                 st.session_state.SCANNED_RESUME = resume_analyzer_main(
                     llm=st.session_state.llm,
                     llm_creative=st.session_state.llm_creative,
-                    documents=st.session_state.documents,
+                    documents=[file_path],
                 )
 
                 # 5. Display results
                 display_resume_analysis(st.session_state.SCANNED_RESUME)
 
             except Exception as e:
-                st.error(f"An error occured: {e}")
+                st.error(f"An error occurred: {e}")
 
 
 if __name__ == "__main__":
