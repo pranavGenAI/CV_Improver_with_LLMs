@@ -15,6 +15,7 @@ def save_uploaded_file(uploaded_file):
         file_path = os.path.join(temp_dir, uploaded_file.name)
         with open(file_path, "wb") as f:
             f.write(uploaded_file.getbuffer())
+            st.write(file_path)
         return file_path
     return None
 
