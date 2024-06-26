@@ -166,8 +166,7 @@ def retrieval_main():
 
     # 1. Delete old temp files from TMP directory.
     delte_temp_files()
-    st.write("Files got deleted")
-
+    
     if st.session_state.uploaded_file is not None:
         # 2. Save uploaded_file to TMP directory.
         saved_file_path = save_uploaded_file(st.session_state.uploaded_file)
@@ -175,9 +174,10 @@ def retrieval_main():
         # 3. Load documents with Langchain loaders
         documents = langchain_document_loader(saved_file_path)
         st.session_state.documents = documents
-
+        
         # 4. Embeddings
         embeddings = select_embeddings_model(st.session_state.LLM_provider)
+        st.write("Embedding done")
 
         # 5. Create a Faiss vector database
         try:
