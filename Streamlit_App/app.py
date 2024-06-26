@@ -10,6 +10,8 @@ def main():
     """Analyze the uploaded resume."""
 
     if st.button("Analyze resume"):
+        st.write("Analyze initiated")
+                
         with st.spinner("Please wait..."):
             try:
                 # 1. Create the Langchain retrieval
