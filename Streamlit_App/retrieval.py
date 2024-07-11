@@ -174,12 +174,10 @@ def retrieval_main():
         
         # 2. Save uploaded_file to TMP directory.
         saved_file_path = save_uploaded_file(st.session_state.uploaded_file)
-        st.write("saved file path", saved_file_path )
 
         # 3. Load documents with Langchain loaders
         documents = langchain_document_loader(saved_file_path)
         st.session_state.documents = documents
-        st.write("document loaded")
         
         # 4. Embeddings
         embeddings = select_embeddings_model(st.session_state.LLM_provider)
