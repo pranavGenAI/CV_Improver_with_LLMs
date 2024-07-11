@@ -67,19 +67,22 @@ def delte_temp_files():
             pass
 
 
+
+
 def save_uploaded_file(uploaded_file):
-    """Save the uploaded file (output of the Streamlit File Uploader widget) to TMP_DIR."""
-
-    temp_file_path = ""
+    """Save the uploaded file (output of the Streamlit File Uploader widget) to DATA_DIR."""
+    DATA_DIR = './data'
+    os.makedirs(DATA_DIR, exist_ok=True)
+    data_file_path = ""
     try:
-        temp_file_path = os.path.join(TMP_DIR.as_posix(), uploaded_file.name)
-        with open(temp_file_path, "wb") as temp_file:
-            temp_file.write(uploaded_file.read())
-        return temp_file_path
+        data_file_path = os.path.join(DATA_DIR, uploaded_file.name)
+        with open(data_file_path, "wb") as data_file:
+            data_file.write(uploaded_file.read())
+        return data_file_path
     except Exception as error:
-        st.error(f"An error occured: {error}")
+        st.error(f"An error occurred: {error}")
 
-    return temp_file_path
+    return data_file_path
 
 
 def tiktoken_tokens(documents, model="gpt-3.5-turbo-0125"):
